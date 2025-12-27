@@ -49,23 +49,20 @@ export interface MaintenanceRequest {
   technicianId?: string;
   scheduledDate?: string;
   createdAt: string;
-  duration?: number; // in minutes
+  duration?: number; 
   status: RequestStatus;
   priority: 'low' | 'medium' | 'high';
   isOverdue: boolean;
 }
 
 interface AppState {
-  // Current user
   currentUser: User;
-  
-  // Data
+
   users: User[];
   teams: Team[];
   equipment: Equipment[];
   requests: MaintenanceRequest[];
   
-  // Actions
   addEquipment: (equipment: Omit<Equipment, 'id' | 'isScrapped'>) => void;
   updateEquipment: (id: string, equipment: Partial<Equipment>) => void;
   deleteEquipment: (id: string) => void;
@@ -83,16 +80,9 @@ interface AppState {
   getTeamRequests: (teamId: string) => MaintenanceRequest[];
 }
 
-// Generate unique ID
 const generateId = () => Math.random().toString(36).substr(2, 9);
-
-// Initial demo data
 const initialUsers: User[] = [
-  { id: '1', name: 'Alex Morgan', email: 'alex@gearguard.com', role: 'manager', avatar: '' },
-  { id: '2', name: 'Jordan Chen', email: 'jordan@gearguard.com', role: 'technician', teamId: '1', avatar: '' },
-  { id: '3', name: 'Sam Wilson', email: 'sam@gearguard.com', role: 'technician', teamId: '2', avatar: '' },
-  { id: '4', name: 'Taylor Brown', email: 'taylor@gearguard.com', role: 'technician', teamId: '1', avatar: '' },
-  { id: '5', name: 'Casey Davis', email: 'casey@gearguard.com', role: 'user', avatar: '' },
+  { id: '1', name: 'Devraj sain', email: 'devrajsain@gmail.com', role: 'manager', avatar: '' },
 ];
 
 const initialTeams: Team[] = [
@@ -196,7 +186,6 @@ export const useAppStore = create<AppState>()(
           const newRequests = state.requests.map((r) => {
             if (r.id !== id) return r;
             
-            // If moving to Scrap, mark equipment as scrapped
             if (status === 'Scrap') {
               const request = state.requests.find((req) => req.id === id);
               if (request) {
